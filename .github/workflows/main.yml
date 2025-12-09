@@ -1,1 +1,21 @@
+on:
+  push:
+    branches:
+      - master
 
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: "login to docker hub"
+        run: docker login --username ${{ secrets.MY_NAME }} --password ${{ secrets.NEW_DOCKER_TOKEN}}
+      - name: "build image"
+        run: docker build -t ${{ secrets.MY_NAME }}/mlkadel-simple-site .
+      - name: "push to dockerhub"
+        run: docker push ${{ secrets.MY_NAME }}/mlkadel-simple-site      
+     
